@@ -151,13 +151,6 @@ python recommender.py     # prueba el recomendador en consola (tras entrenar)
 | Descarga lenta / errores 429 | TMDB limita el ritmo; el cliente reintenta solo. Reduce `--pages`. |
 | Instalación de PyTorch muy pesada | Usa `python train.py --no-semantic`. |
 
----
-
-## 📄 Documentación
-
-Manuales en PDF en la carpeta [`docs/`](docs/):
-- **Manual de Usuario y Sistema** — guía completa de funciones, instalación, operación y arquitectura.
-- **Guía Rápida** — lo esencial en una página.
 
 ---
 
