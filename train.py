@@ -18,9 +18,11 @@ Uso:
 from __future__ import annotations
 
 import argparse
+import math
 
 import joblib
 import numpy as np
+import pandas as pd
 from sklearn.cluster import KMeans
 from sklearn.decomposition import PCA
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -31,11 +33,7 @@ import data_preprocessing as dp
 
 
 def build_dataset_if_needed(pages: int, refresh: bool) -> None:
-    """Descarga el dataset si no existe o si se fuerza con --refresh."""
-    if config.MOVIES_CSV.exists() and not refresh:
-        print(f"[train] Dataset existente en {config.MOVIES_CSV} (usa --refresh para rehacerlo).")
-        return
-
+    """Descarga el dataset o lo amplía sin volver a pedir páginas viejas."""
     from tmdb_api import TMDBClient
 
     client = TMDBClient()
@@ -45,10 +43,40 @@ def build_dataset_if_needed(pages: int, refresh: bool) -> None:
             "Crea un archivo .env con TMDB_API_KEY=tu_clave (ver .env.example)\n"
             "u obtén una clave gratis en https://www.themoviedb.org/settings/api"
         )
-    df = client.build_dataset(pages=pages)
-    if df.empty:
-        raise SystemExit("La descarga no devolvió películas. Revisa tu API key / conexión.")
-    client.save_dataset(df)
+
+    existing_df = None
+    start_page = 1
+    if config.MOVIES_CSV.exists() and not refresh:
+        existing_df = pd.read_csv(config.MOVIES_CSV)
+        existing_pages = max(1, math.ceil(len(existing_df) / 20))
+        if pages <= existing_pages:
+            print(
+                f"[train] Dataset existente en {config.MOVIES_CSV} "
+                f"({len(existing_df)} filas, ~{existing_pages} páginas)."
+            )
+            return
+        start_page = existing_pages + 1
+        print(
+            f"[train] Dataset existente con {len(existing_df)} filas. "
+            f"Añadiendo páginas {start_page} a {pages}."
+        )
+    else:
+        print(f"[train] Descargando dataset desde cero: páginas 1 a {pages}.")
+
+    df_new = client.build_dataset(pages=pages, start_page=start_page)
+    if df_new.empty:
+        if existing_df is None:
+            raise SystemExit("La descarga no devolvió películas. Revisa tu API key / conexión.")
+        print("[train] No se encontraron filas nuevas para añadir.")
+        return
+
+    if existing_df is not None and not existing_df.empty:
+        merged = pd.concat([existing_df, df_new], ignore_index=True)
+        merged = merged.drop_duplicates(subset="id", keep="first")
+        print(f"[train] CSV ampliado: {len(merged)} filas totales.")
+        client.save_dataset(merged)
+    else:
+        client.save_dataset(df_new)
 
 
 def train_tfidf(df):

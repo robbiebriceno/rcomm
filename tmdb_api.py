@@ -90,11 +90,18 @@ class TMDBClient:
     # ------------------------------------------------------------------ #
     # Construcción del dataset
     # ------------------------------------------------------------------ #
-    def fetch_movie_ids(self, pages: int) -> list[int]:
-        """Recoge IDs de películas ordenadas por popularidad."""
+    def fetch_movie_ids(self, pages: int, start_page: int = 1) -> list[int]:
+        """Recoge IDs de películas ordenadas por popularidad.
+
+        Se puede reanudar desde una página posterior para evitar repetir
+        llamadas ya hechas en ejecuciones anteriores.
+        """
         ids: list[int] = []
         seen: set[int] = set()
-        for page in range(1, pages + 1):
+        if start_page > pages:
+            return ids
+
+        for page in range(start_page, pages + 1):
             data = self._get(
                 "discover/movie",
                 sort_by="popularity.desc",
@@ -170,7 +177,11 @@ class TMDBClient:
             "trailer_key": trailer_key,
         }
 
-    def build_dataset(self, pages: int = config.DEFAULT_PAGES) -> pd.DataFrame:
+    def build_dataset(
+        self,
+        pages: int = config.DEFAULT_PAGES,
+        start_page: int = 1,
+    ) -> pd.DataFrame:
         """Descarga y construye el DataFrame completo del dataset.
 
         Las columnas de listas (genres, keywords, cast) se serializan a JSON al
@@ -182,8 +193,8 @@ class TMDBClient:
                 "TMDB_API_KEY=tu_clave (ver .env.example)."
             )
 
-        print(f"[TMDB] Obteniendo IDs de hasta {pages} páginas…")
-        ids = self.fetch_movie_ids(pages)
+        print(f"[TMDB] Obteniendo IDs de las páginas {start_page} a {pages}…")
+        ids = self.fetch_movie_ids(pages, start_page=start_page)
         print(f"[TMDB] {len(ids)} IDs únicos. Descargando detalles…")
 
         rows: list[dict] = []
