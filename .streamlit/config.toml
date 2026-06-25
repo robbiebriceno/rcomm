@@ -1,0 +1,8 @@
+# Tema base: minimalismo monocromático (blanco / negro)
+[theme]
+base = "light"
+backgroundColor = "#FFFFFF"
+secondaryBackgroundColor = "#FFFFFF"
+textColor = "#000000"
+primaryColor = "#000000"
+font = "sans serif"
