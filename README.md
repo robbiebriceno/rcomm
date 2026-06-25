@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🎬 Recomendador Inteligente de Películas
+# 🎬 rcomm — Recomendador Inteligente de Películas
 
 **Encuentra películas similares con Machine Learning, NLP y búsqueda semántica.**
 Sin usuarios, sin autenticación, sin historial — solo recomendaciones.
