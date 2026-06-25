@@ -213,11 +213,22 @@ class TMDBClient:
         print(f"[TMDB] Dataset construido: {len(df)} películas válidas.")
         return df
 
+    @staticmethod
+    def _serialize_field(value: Any) -> str:
+        """Serializa listas a JSON, pero deja intacto lo que ya es texto.
+
+        Evita la doble codificación al reguardar un CSV cuyas columnas de lista
+        ya venían serializadas (p. ej. al ampliar el dataset).
+        """
+        if isinstance(value, str):
+            return value
+        return json.dumps(value, ensure_ascii=False)
+
     def save_dataset(self, df: pd.DataFrame, path: Path = config.MOVIES_CSV) -> None:
         out = df.copy()
         for col in ("genres", "keywords", "cast"):
             if col in out.columns:
-                out[col] = out[col].apply(json.dumps)
+                out[col] = out[col].apply(self._serialize_field)
         path.parent.mkdir(parents=True, exist_ok=True)
         out.to_csv(path, index=False, encoding="utf-8")
         print(f"[TMDB] Guardado en {path}")

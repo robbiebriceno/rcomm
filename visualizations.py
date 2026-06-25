@@ -5,6 +5,7 @@ Cada función devuelve una figura de Matplotlib lista para ``st.pyplot``.
 """
 from __future__ import annotations
 
+import logging
 from collections import Counter
 
 import matplotlib as mpl
@@ -12,6 +13,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import seaborn as sns
+
+# Silencia los avisos "findfont" cuando Helvetica no está instalada (usa fallback).
+logging.getLogger("matplotlib.font_manager").setLevel(logging.ERROR)
 
 # --- Estilo global monocromático ------------------------------------------- #
 sns.set_theme(style="white")
@@ -130,6 +134,61 @@ def cluster_scatter(df: pd.DataFrame):
     else:
         ax.text(0.5, 0.5, "Sin datos de clustering", ha="center", va="center")
     ax.set_title("CLUSTERS DE PELÍCULAS (PCA 2D)")
+    ax.set_xlabel("Componente 1")
+    ax.set_ylabel("Componente 2")
+    _style(ax)
+    fig.tight_layout()
+    return fig
+
+
+# --------------------------------------------------------------------------- #
+# Proceso de similitud de una película concreta
+# --------------------------------------------------------------------------- #
+def similarity_ranking(recs: list[dict]):
+    """Barra horizontal con la similitud (%) de cada recomendación.
+
+    Muestra de forma directa el 'proceso': los scores de similitud coseno que
+    ordenan las recomendaciones para la película buscada.
+    """
+    names = [r["title"] for r in recs]
+    scores = [r["score"] * 100 for r in recs]
+
+    fig, ax = plt.subplots(figsize=(8, max(3.0, len(names) * 0.42)))
+    ax.barh(names, scores, color=_DARK, edgecolor=_LINE, linewidth=0.8)
+    ax.invert_yaxis()
+    for i, sc in enumerate(scores):
+        ax.text(min(sc + 1.5, 98), i, f"{sc:.0f}%", va="center", fontsize=8.5)
+    ax.set_xlim(0, 100)
+    ax.set_title("RANKING DE SIMILITUD CON LA PELÍCULA BUSCADA")
+    ax.set_xlabel("Similitud coseno (%)")
+    _style(ax)
+    fig.tight_layout()
+    return fig
+
+
+def cluster_scatter_highlight(df: pd.DataFrame, source_index: int,
+                              rec_indices: list[int]):
+    """Mapa PCA con la película buscada y sus recomendaciones destacadas.
+
+    Visualiza por qué se recomiendan: la buscada (estrella) y sus vecinas
+    (puntos oscuros) caen cerca en el espacio de características.
+    """
+    fig, ax = plt.subplots(figsize=(8, 6))
+    if {"pca_x", "pca_y"}.issubset(df.columns):
+        ax.scatter(df["pca_x"], df["pca_y"], s=12, color="#d9d9d9",
+                   edgecolor="none", label="Catálogo", zorder=1)
+        if rec_indices:
+            r = df.iloc[rec_indices]
+            ax.scatter(r["pca_x"], r["pca_y"], s=60, color=_MID,
+                       edgecolor=_LINE, linewidth=0.7, label="Recomendadas", zorder=2)
+        s = df.iloc[source_index]
+        ax.scatter([s["pca_x"]], [s["pca_y"]], s=260, color=_LINE, marker="*",
+                   edgecolor=_LINE, linewidth=0.8, label="Buscada", zorder=3)
+        leg = ax.legend(loc="best", frameon=True, edgecolor=_LINE, fontsize=9)
+        leg.get_frame().set_linewidth(1.2)
+    else:
+        ax.text(0.5, 0.5, "Sin datos de PCA", ha="center", va="center")
+    ax.set_title("UBICACIÓN EN EL ESPACIO DE SIMILITUD (PCA 2D)")
     ax.set_xlabel("Componente 1")
     ax.set_ylabel("Componente 2")
     _style(ax)

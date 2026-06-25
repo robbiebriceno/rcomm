@@ -34,6 +34,7 @@ Sin usuarios, sin autenticación, sin historial — solo recomendaciones.
 pip install -r requirements.txt     # 1. instalar dependencias
 cp .env.example .env                # 2. añade tu TMDB_API_KEY (copy en Windows)
 python train.py                     # 3. descarga el dataset y entrena
+python train.py --target-rows 5000   # 3b. amplía el CSV hasta 5000 filas sin reemplazarlo
 streamlit run app.py                # 4. ¡a recomendar!
 ```
 
@@ -118,10 +119,11 @@ La app tiene tres pestañas:
 |---|---|
 | `python train.py` | Entrenamiento por defecto (~2.500 películas) |
 | `python train.py --pages 300 --refresh` | Catálogo más grande (~6.000 películas) |
+| `python train.py --target-rows 5000` | Amplía el CSV hasta 5.000 filas sin sobrescribirlo |
 | `python train.py --no-semantic` | Versión ligera, sin PyTorch |
 | `python train.py --clusters 10` | Nº de grupos de KMeans |
 
-> Cada página de TMDB = 20 películas (máximo ~10.000). Usa `--refresh` para reconstruir el dataset.
+> Cada página de TMDB = 20 películas (máximo ~10.000). Usa `--refresh` para reconstruir el dataset; usa `--target-rows` para ampliar el CSV de forma incremental.
 
 ---
 

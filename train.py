@@ -12,6 +12,7 @@ Uso:
     python train.py                 # usa data/movies.csv si existe, si no lo descarga
     python train.py --refresh       # fuerza la descarga del dataset
     python train.py --pages 50      # descarga ~1000 películas
+    python train.py --target-rows 5000  # amplía el CSV hasta ese mínimo
     python train.py --no-semantic   # omite embeddings/torch (más ligero)
     python train.py --clusters 10   # número de clusters de KMeans
 """
@@ -32,7 +33,7 @@ import config
 import data_preprocessing as dp
 
 
-def build_dataset_if_needed(pages: int, refresh: bool) -> None:
+def build_dataset_if_needed(pages: int, refresh: bool, target_rows: int | None = None) -> None:
     """Descarga el dataset o lo amplía sin volver a pedir páginas viejas."""
     from tmdb_api import TMDBClient
 
@@ -48,20 +49,67 @@ def build_dataset_if_needed(pages: int, refresh: bool) -> None:
     start_page = 1
     if config.MOVIES_CSV.exists() and not refresh:
         existing_df = pd.read_csv(config.MOVIES_CSV)
-        existing_pages = max(1, math.ceil(len(existing_df) / 20))
-        if pages <= existing_pages:
+        current_rows = len(existing_df)
+
+        if target_rows is not None and current_rows >= target_rows:
             print(
                 f"[train] Dataset existente en {config.MOVIES_CSV} "
-                f"({len(existing_df)} filas, ~{existing_pages} páginas)."
+                f"({current_rows} filas) ya alcanza el objetivo de {target_rows}."
             )
             return
+
+        existing_pages = max(1, math.ceil(current_rows / 20))
+        if target_rows is None and pages <= existing_pages:
+            print(
+                f"[train] Dataset existente en {config.MOVIES_CSV} "
+                f"({current_rows} filas, ~{existing_pages} páginas)."
+            )
+            return
+
         start_page = existing_pages + 1
-        print(
-            f"[train] Dataset existente con {len(existing_df)} filas. "
-            f"Añadiendo páginas {start_page} a {pages}."
-        )
+        if target_rows is None:
+            print(
+                f"[train] Dataset existente con {current_rows} filas. "
+                f"Añadiendo páginas {start_page} a {pages}."
+            )
+        else:
+            print(
+                f"[train] Dataset existente con {current_rows} filas. "
+                f"Añadiendo desde la página {start_page} hasta alcanzar {target_rows}."
+            )
     else:
-        print(f"[train] Descargando dataset desde cero: páginas 1 a {pages}.")
+        if target_rows is None:
+            print(f"[train] Descargando dataset desde cero: páginas 1 a {pages}.")
+        else:
+            print(f"[train] Descargando dataset desde cero hasta alcanzar {target_rows} filas.")
+
+    if target_rows is not None:
+        merged = existing_df.copy() if existing_df is not None else pd.DataFrame()
+        max_page = 500
+        for page in range(start_page, max_page + 1):
+            if len(merged) >= target_rows:
+                break
+            df_new = client.build_dataset(pages=page, start_page=page)
+            if df_new.empty:
+                continue
+            if merged.empty:
+                merged = df_new
+            else:
+                merged = pd.concat([merged, df_new], ignore_index=True)
+            merged = merged.drop_duplicates(subset="id", keep="first")
+            print(f"[train] Acumuladas {len(merged)} filas…")
+
+        if merged.empty:
+            raise SystemExit("La descarga no devolvió películas. Revisa tu API key / conexión.")
+
+        if len(merged) < target_rows:
+            print(
+                f"[train] Aviso: solo se alcanzaron {len(merged)} filas "
+                f"antes de agotar las páginas disponibles de TMDB."
+            )
+
+        client.save_dataset(merged)
+        return
 
     df_new = client.build_dataset(pages=pages, start_page=start_page)
     if df_new.empty:
@@ -133,6 +181,8 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Entrena el recomendador de películas.")
     parser.add_argument("--pages", type=int, default=config.DEFAULT_PAGES,
                         help="Páginas a descargar de TMDB (20 películas/página).")
+    parser.add_argument("--target-rows", type=int, default=None,
+                        help="Filas mínimas deseadas en data/movies.csv; añade solo lo necesario.")
     parser.add_argument("--refresh", action="store_true",
                         help="Fuerza la descarga del dataset aunque exista.")
     parser.add_argument("--no-semantic", action="store_true",
@@ -142,7 +192,7 @@ def main() -> None:
     args = parser.parse_args()
 
     # 1. Dataset
-    build_dataset_if_needed(args.pages, args.refresh)
+    build_dataset_if_needed(args.pages, args.refresh, args.target_rows)
 
     # 2. Preprocesamiento
     print("[train] Preprocesando…")

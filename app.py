@@ -226,8 +226,39 @@ def main() -> None:
 
     # ------------------------------- Dashboard --------------------------- #
     with tab_dash:
-        st.subheader("Análisis del catálogo")
         df = rec.movies
+
+        # --- Proceso de similitud de una película concreta ---
+        st.subheader("Proceso de similitud")
+        st.caption(
+            "El sistema convierte cada película en un vector y mide la **similitud "
+            "coseno** frente a las demás. Estas son las más cercanas a la elegida."
+        )
+        dc1, dc2 = st.columns([3, 1])
+        with dc1:
+            dash_sel = st.selectbox(
+                "Película de referencia", options=rec.titles, key="dash_sel",
+                placeholder="Escribe para buscar…",
+            )
+        with dc2:
+            dash_n = st.slider("Top N", 5, 20, 10, key="dash_n")
+
+        dash_recs = rec.recommend_movies(dash_sel, dash_n)
+        src_idx = rec.find_index(dash_sel)
+        if dash_recs and src_idx is not None:
+            g1, g2 = st.columns(2)
+            with g1:
+                st.pyplot(viz.similarity_ranking(dash_recs))
+            with g2:
+                rec_idx = [r["index"] for r in dash_recs]
+                st.pyplot(viz.cluster_scatter_highlight(df, src_idx, rec_idx))
+        else:
+            st.info("Selecciona una película para ver su proceso de similitud.")
+
+        st.divider()
+
+        # --- Análisis global del catálogo ---
+        st.subheader("Análisis del catálogo")
         c1, c2 = st.columns(2)
         with c1:
             st.pyplot(viz.top_genres(df))

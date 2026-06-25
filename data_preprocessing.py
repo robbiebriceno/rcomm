@@ -46,16 +46,27 @@ def parse_field(value: object) -> list[str]:
         s = value.strip()
         if not s:
             return []
-        items = None
-        for loader in (json.loads, ast.literal_eval):
-            try:
-                items = loader(s)
+        items = s
+        # Decodifica tolerando doble codificación JSON (string -> string -> list).
+        # Esto repara CSV donde una columna ya serializada se volvió a serializar.
+        for _ in range(3):
+            parsed = None
+            for loader in (json.loads, ast.literal_eval):
+                try:
+                    parsed = loader(items)
+                    break
+                except Exception:
+                    continue
+            if parsed is None:
                 break
-            except Exception:
+            if isinstance(parsed, str):
+                items = parsed  # estaba doblemente codificado: reintenta
                 continue
-        if items is None:
-            # cadena suelta separada por comas
-            items = [p.strip() for p in s.split(",") if p.strip()]
+            items = parsed
+            break
+        if isinstance(items, str):
+            # no era JSON: trátalo como lista separada por comas
+            items = [p.strip() for p in items.split(",") if p.strip()]
     else:
         return []
 
