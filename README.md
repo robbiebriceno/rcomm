@@ -24,7 +24,7 @@ Sin usuarios, sin autenticación, sin historial — solo recomendaciones.
 | 💡 | **Explicabilidad** — por qué se recomienda cada película | Género · Director · Temática · Actores |
 | 📊 | **Dashboard** — análisis visual del catálogo | Matplotlib + Seaborn |
 | 🖼️ | **Integración TMDB** — pósters, backdrops, tráilers y sinopsis en vivo | TMDB API + caché |
-| 🎨 | **Interfaz** — diseño minimalista monocromático | Estética editorial / suiza |
+| 🎨 | **Interfaz** — diseño minimalista monocromático | Estética editorial |
 
 ---
 
