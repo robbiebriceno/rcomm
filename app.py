@@ -9,6 +9,7 @@ Sin usuarios, autenticación ni historial.
 """
 from __future__ import annotations
 
+import pandas as pd
 import streamlit as st
 
 import config
@@ -143,6 +144,95 @@ def render_results(results: list[dict], rec: Recommender, source_title: str | No
 
 
 # --------------------------------------------------------------------------- #
+# Dashboard
+# --------------------------------------------------------------------------- #
+def _kpi(value: object, label: str) -> str:
+    return f"<div class='kpi'><div class='num'>{value}</div><div class='lab'>{label}</div></div>"
+
+
+def render_kpis(df: pd.DataFrame) -> None:
+    """Fila de tarjetas KPI con el resumen del catálogo."""
+    total = len(df)
+    ratings = pd.to_numeric(df.get("vote_average"), errors="coerce")
+    ratings = ratings[ratings > 0]
+    mean_rating = f"{ratings.mean():.1f}" if len(ratings) else "—"
+
+    genres: set[str] = set()
+    for s in df.get("genres_str", pd.Series(dtype=str)).dropna():
+        genres.update(g.strip() for g in str(s).split(",") if g.strip())
+
+    n_clusters = int(df["cluster"].nunique()) if "cluster" in df.columns else "—"
+
+    cards = (
+        _kpi(f"{total:,}".replace(",", "."), "Películas en catálogo")
+        + _kpi(mean_rating, "Rating medio")
+        + _kpi(len(genres), "Géneros únicos")
+        + _kpi(n_clusters, "Grupos temáticos")
+    )
+    st.markdown(f"<div class='kpi-grid'>{cards}</div>", unsafe_allow_html=True)
+
+
+def render_dashboard(df: pd.DataFrame, rec: Recommender) -> None:
+    """Dashboard estructurado: resumen → proceso de similitud → análisis global."""
+    # 1) Resumen del catálogo
+    st.subheader("Resumen del catálogo")
+    render_kpis(df)
+
+    st.divider()
+
+    # 2) Proceso de similitud (coherente con la pestaña «Recomendar»)
+    st.subheader("Proceso de similitud")
+    st.caption(
+        "Cómo decide el recomendador: convierte cada película en un vector y mide la "
+        "**similitud coseno** frente al resto. Elige una película para ver su proceso."
+    )
+    dc1, dc2 = st.columns([3, 1])
+    with dc1:
+        dash_sel = st.selectbox(
+            "Película de referencia", options=rec.titles, key="dash_sel",
+            placeholder="Escribe para buscar…",
+        )
+    with dc2:
+        dash_n = st.slider("Top N", 5, 20, 10, key="dash_n")
+
+    dash_recs = rec.recommend_movies(dash_sel, dash_n)
+    src_idx = rec.find_index(dash_sel)
+    if dash_recs and src_idx is not None:
+        st.markdown(
+            f"<p class='results-meta'>Proceso de &laquo;{dash_sel}&raquo;</p>",
+            unsafe_allow_html=True,
+        )
+        g1, g2 = st.columns(2, gap="large")
+        with g1:
+            st.pyplot(viz.similarity_ranking(dash_recs))
+            st.caption("Similitud coseno (0–100 %) entre la película elegida y cada recomendación.")
+        with g2:
+            rec_idx = [r["index"] for r in dash_recs]
+            st.pyplot(viz.cluster_scatter_highlight(df, src_idx, rec_idx))
+            st.caption("La estrella es la película elegida; los puntos oscuros, sus recomendaciones.")
+    else:
+        st.info("Selecciona una película para ver su proceso de similitud.")
+
+    st.divider()
+
+    # 3) Análisis global del catálogo
+    st.subheader("Análisis del catálogo")
+    c1, c2 = st.columns(2, gap="large")
+    with c1:
+        st.pyplot(viz.top_genres(df))
+    with c2:
+        st.pyplot(viz.ratings_distribution(df))
+
+    c3, c4 = st.columns(2, gap="large")
+    with c3:
+        st.pyplot(viz.top_popular(df))
+    with c4:
+        st.pyplot(viz.cluster_scatter(df))
+
+    st.pyplot(viz.similarity_heatmap(df, rec.similarity))
+
+
+# --------------------------------------------------------------------------- #
 # App
 # --------------------------------------------------------------------------- #
 def main() -> None:
@@ -227,52 +317,7 @@ def main() -> None:
     # ------------------------------- Dashboard --------------------------- #
     with tab_dash:
         df = rec.movies
-
-        # --- Proceso de similitud de una película concreta ---
-        st.subheader("Proceso de similitud")
-        st.caption(
-            "El sistema convierte cada película en un vector y mide la **similitud "
-            "coseno** frente a las demás. Estas son las más cercanas a la elegida."
-        )
-        dc1, dc2 = st.columns([3, 1])
-        with dc1:
-            dash_sel = st.selectbox(
-                "Película de referencia", options=rec.titles, key="dash_sel",
-                placeholder="Escribe para buscar…",
-            )
-        with dc2:
-            dash_n = st.slider("Top N", 5, 20, 10, key="dash_n")
-
-        dash_recs = rec.recommend_movies(dash_sel, dash_n)
-        src_idx = rec.find_index(dash_sel)
-        if dash_recs and src_idx is not None:
-            g1, g2 = st.columns(2)
-            with g1:
-                st.pyplot(viz.similarity_ranking(dash_recs))
-            with g2:
-                rec_idx = [r["index"] for r in dash_recs]
-                st.pyplot(viz.cluster_scatter_highlight(df, src_idx, rec_idx))
-        else:
-            st.info("Selecciona una película para ver su proceso de similitud.")
-
-        st.divider()
-
-        # --- Análisis global del catálogo ---
-        st.subheader("Análisis del catálogo")
-        c1, c2 = st.columns(2)
-        with c1:
-            st.pyplot(viz.top_genres(df))
-        with c2:
-            st.pyplot(viz.ratings_distribution(df))
-
-        c3, c4 = st.columns(2)
-        with c3:
-            st.pyplot(viz.top_popular(df))
-        with c4:
-            st.pyplot(viz.cluster_scatter(df))
-
-        st.markdown("#### Matriz de similitud")
-        st.pyplot(viz.similarity_heatmap(df, rec.similarity))
+        render_dashboard(df, rec)
 
 
 if __name__ == "__main__":
