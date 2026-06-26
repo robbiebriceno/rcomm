@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🎬 rcomm — Recomendador Inteligente de Películas
+<img src="assets/banner.svg" alt="Recomendador Inteligente de Películas" width="100%">
 
 **Encuentra películas similares con Machine Learning, NLP y búsqueda semántica.**
 Sin usuarios, sin autenticación, sin historial — solo recomendaciones.
@@ -12,6 +12,24 @@ Sin usuarios, sin autenticación, sin historial — solo recomendaciones.
 ![TMDB](https://img.shields.io/badge/TMDB-API-01B4E4?logo=themoviedatabase&logoColor=white)
 
 </div>
+
+---
+
+## 🖼️ Vista previa
+
+### 🎯 Recomendar
+
+<div align="center">
+<img src="assets/screenshot_recomendar.svg" alt="Pestaña Recomendar: cuadrícula de tarjetas con póster, similitud, datos y motivo" width="92%">
+</div>
+
+### 📊 Dashboard
+
+<div align="center">
+<img src="assets/screenshot_dashboard.svg" alt="Pestaña Dashboard: KPIs, proceso de similitud y análisis del catálogo" width="92%">
+</div>
+
+> <sub>Maquetas que reflejan la estética real de la app (blanco puro · bordes negros · monocromo).</sub>
 
 ---
 
@@ -72,7 +90,7 @@ rcomm/
 ├── config.py              # Rutas, constantes y carga de la API key
 ├── models/                # Artefactos entrenados (.pkl, .parquet) — los genera train.py
 ├── data/                  # movies.csv — generado por el fetch
-├── assets/style.css       # Estilos de la interfaz
+├── assets/                # Estilos (style.css) e imágenes del README
 ├── docs/                  # Manuales en PDF (usuario/sistema y guía rápida)
 ├── .streamlit/config.toml # Tema base de la app
 ├── .env.example           # Plantilla para TMDB_API_KEY
@@ -111,7 +129,7 @@ La app tiene tres pestañas:
 
 - **🎯 Recomendar** — elige una película y recibe las más parecidas en tarjetas (póster, datos, % de similitud y el motivo).
 - **🧠 Búsqueda semántica** — describe lo que quieres en lenguaje natural.
-- **📊 Dashboard** — géneros frecuentes, distribución de ratings, top de popularidad, matriz de similitud y clusters.
+- **📊 Dashboard** — resumen (KPIs), proceso de similitud de una película y análisis del catálogo.
 
 **Opciones de entrenamiento**
 
@@ -152,7 +170,6 @@ python recommender.py     # prueba el recomendador en consola (tras entrenar)
 | `No hay TMDB_API_KEY` al entrenar | Crea `.env` con tu clave o exporta `TMDB_API_KEY`. |
 | Descarga lenta / errores 429 | TMDB limita el ritmo; el cliente reintenta solo. Reduce `--pages`. |
 | Instalación de PyTorch muy pesada | Usa `python train.py --no-semantic`. |
-
 
 ---
 

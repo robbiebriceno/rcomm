@@ -1,0 +1,105 @@
+<svg viewBox="0 0 1200 840" xmlns="http://www.w3.org/2000/svg" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">
+  <rect x="0" y="0" width="1200" height="840" fill="#ffffff"/>
+  <rect x="6" y="6" width="1188" height="828" fill="none" stroke="#000000" stroke-width="4"/>
+
+  <!-- Header -->
+  <text x="40" y="66" font-size="30" font-weight="800" fill="#000000" letter-spacing="-0.5">RECOMENDADOR INTELIGENTE DE PELÍCULAS</text>
+  <text x="40" y="94" font-size="13" font-weight="700" letter-spacing="5" fill="#6b6b6b">MACHINE LEARNING · NLP · BÚSQUEDA SEMÁNTICA</text>
+  <line x1="40" y1="112" x2="1160" y2="112" stroke="#000000" stroke-width="4"/>
+
+  <!-- Tabs -->
+  <rect x="40" y="150" width="540" height="40" fill="none" stroke="#000000" stroke-width="2"/>
+  <rect x="40" y="150" width="160" height="40" fill="#000000"/>
+  <text x="120" y="176" font-size="13" font-weight="700" letter-spacing="1" fill="#ffffff" text-anchor="middle">RECOMENDAR</text>
+  <line x1="200" y1="150" x2="200" y2="190" stroke="#000000" stroke-width="2"/>
+  <text x="315" y="176" font-size="13" font-weight="700" letter-spacing="1" fill="#000000" text-anchor="middle">BÚSQUEDA SEMÁNTICA</text>
+  <line x1="430" y1="150" x2="430" y2="190" stroke="#000000" stroke-width="2"/>
+  <text x="505" y="176" font-size="13" font-weight="700" letter-spacing="1" fill="#000000" text-anchor="middle">DASHBOARD</text>
+
+  <!-- Controls -->
+  <text x="40" y="222" font-size="11" font-weight="700" letter-spacing="1.5" fill="#000000">BUSCA Y SELECCIONA UNA PELÍCULA</text>
+  <rect x="40" y="230" width="760" height="44" fill="#ffffff" stroke="#000000" stroke-width="2"/>
+  <text x="56" y="258" font-size="15" fill="#000000">The Dark Knight</text>
+  <text x="780" y="259" font-size="14" fill="#000000" text-anchor="end">▾</text>
+  <text x="820" y="222" font-size="11" font-weight="700" letter-spacing="1.5" fill="#000000">Nº RECOMENDACIONES</text>
+  <rect x="820" y="230" width="180" height="44" fill="#ffffff" stroke="#000000" stroke-width="2"/>
+  <text x="838" y="258" font-size="15" fill="#000000">6</text>
+  <line x1="900" y1="252" x2="980" y2="252" stroke="#000000" stroke-width="2"/>
+  <circle cx="940" cy="252" r="6" fill="#000000"/>
+  <rect x="1020" y="230" width="140" height="44" fill="#ffffff" stroke="#000000" stroke-width="2"/>
+  <text x="1090" y="258" font-size="13" font-weight="700" letter-spacing="1" fill="#000000" text-anchor="middle">RECOMENDAR</text>
+
+  <!-- Results header -->
+  <text x="40" y="316" font-size="14" font-weight="700" letter-spacing="1" fill="#000000">6 PELÍCULAS SIMILARES A «THE DARK KNIGHT»</text>
+  <line x1="40" y1="328" x2="1160" y2="328" stroke="#000000" stroke-width="3"/>
+
+  <!-- Cards -->
+  <g>
+    <!-- Card 1 -->
+    <g transform="translate(40,0)">
+      <rect x="0" y="348" width="357" height="468" fill="#ffffff" stroke="#000000" stroke-width="4"/>
+      <rect x="0" y="348" width="357" height="200" fill="#e4e4e4"/>
+      <line x1="0" y1="548" x2="357" y2="548" stroke="#000000" stroke-width="4"/>
+      <text x="178" y="453" font-size="13" letter-spacing="3" fill="#9a9a9a" text-anchor="middle">PÓSTER</text>
+      <rect x="18" y="566" width="138" height="26" fill="#000000"/>
+      <text x="30" y="584" font-size="12" font-weight="700" letter-spacing="1" fill="#ffffff">SIMILITUD 96%</text>
+      <text x="18" y="624" font-size="19" font-weight="800" fill="#000000">BATMAN BEGINS</text>
+      <text x="18" y="648" font-size="12" fill="#6b6b6b">(2005)</text>
+      <line x1="18" y1="664" x2="339" y2="664" stroke="#000000" stroke-width="1"/>
+      <text x="18" y="686" font-size="11" font-weight="700" letter-spacing="1" fill="#6b6b6b">GÉNERO</text>
+      <text x="339" y="686" font-size="13" font-weight="600" fill="#000000" text-anchor="end">Action, Crime</text>
+      <line x1="18" y1="698" x2="339" y2="698" stroke="#d9d9d9" stroke-width="1"/>
+      <text x="18" y="720" font-size="11" font-weight="700" letter-spacing="1" fill="#6b6b6b">RATING</text>
+      <text x="339" y="720" font-size="13" font-weight="600" fill="#000000" text-anchor="end">8.5</text>
+      <line x1="18" y1="732" x2="339" y2="732" stroke="#d9d9d9" stroke-width="1"/>
+      <text x="18" y="754" font-size="11" font-weight="700" letter-spacing="1" fill="#6b6b6b">AÑO</text>
+      <text x="339" y="754" font-size="13" font-weight="600" fill="#000000" text-anchor="end">2005</text>
+      <rect x="18" y="766" width="321" height="26" fill="none" stroke="#000000" stroke-width="1"/>
+      <text x="28" y="783" font-size="11" fill="#000000"><tspan font-weight="700" letter-spacing="1">COMPARTE</tspan>  Género · Director · Actores</text>
+    </g>
+    <!-- Card 2 -->
+    <g transform="translate(421,0)">
+      <rect x="0" y="348" width="357" height="468" fill="#ffffff" stroke="#000000" stroke-width="4"/>
+      <rect x="0" y="348" width="357" height="200" fill="#e4e4e4"/>
+      <line x1="0" y1="548" x2="357" y2="548" stroke="#000000" stroke-width="4"/>
+      <text x="178" y="453" font-size="13" letter-spacing="3" fill="#9a9a9a" text-anchor="middle">PÓSTER</text>
+      <rect x="18" y="566" width="138" height="26" fill="#000000"/>
+      <text x="30" y="584" font-size="12" font-weight="700" letter-spacing="1" fill="#ffffff">SIMILITUD 90%</text>
+      <text x="18" y="624" font-size="19" font-weight="800" fill="#000000">INCEPTION</text>
+      <text x="18" y="648" font-size="12" fill="#6b6b6b">(2010)</text>
+      <line x1="18" y1="664" x2="339" y2="664" stroke="#000000" stroke-width="1"/>
+      <text x="18" y="686" font-size="11" font-weight="700" letter-spacing="1" fill="#6b6b6b">GÉNERO</text>
+      <text x="339" y="686" font-size="13" font-weight="600" fill="#000000" text-anchor="end">Action, Sci-Fi</text>
+      <line x1="18" y1="698" x2="339" y2="698" stroke="#d9d9d9" stroke-width="1"/>
+      <text x="18" y="720" font-size="11" font-weight="700" letter-spacing="1" fill="#6b6b6b">RATING</text>
+      <text x="339" y="720" font-size="13" font-weight="600" fill="#000000" text-anchor="end">8.8</text>
+      <line x1="18" y1="732" x2="339" y2="732" stroke="#d9d9d9" stroke-width="1"/>
+      <text x="18" y="754" font-size="11" font-weight="700" letter-spacing="1" fill="#6b6b6b">AÑO</text>
+      <text x="339" y="754" font-size="13" font-weight="600" fill="#000000" text-anchor="end">2010</text>
+      <rect x="18" y="766" width="321" height="26" fill="none" stroke="#000000" stroke-width="1"/>
+      <text x="28" y="783" font-size="11" fill="#000000"><tspan font-weight="700" letter-spacing="1">COMPARTE</tspan>  Director · Temática</text>
+    </g>
+    <!-- Card 3 -->
+    <g transform="translate(802,0)">
+      <rect x="0" y="348" width="357" height="468" fill="#ffffff" stroke="#000000" stroke-width="4"/>
+      <rect x="0" y="348" width="357" height="200" fill="#e4e4e4"/>
+      <line x1="0" y1="548" x2="357" y2="548" stroke="#000000" stroke-width="4"/>
+      <text x="178" y="453" font-size="13" letter-spacing="3" fill="#9a9a9a" text-anchor="middle">PÓSTER</text>
+      <rect x="18" y="566" width="138" height="26" fill="#000000"/>
+      <text x="30" y="584" font-size="12" font-weight="700" letter-spacing="1" fill="#ffffff">SIMILITUD 87%</text>
+      <text x="18" y="624" font-size="19" font-weight="800" fill="#000000">THE PRESTIGE</text>
+      <text x="18" y="648" font-size="12" fill="#6b6b6b">(2006)</text>
+      <line x1="18" y1="664" x2="339" y2="664" stroke="#000000" stroke-width="1"/>
+      <text x="18" y="686" font-size="11" font-weight="700" letter-spacing="1" fill="#6b6b6b">GÉNERO</text>
+      <text x="339" y="686" font-size="13" font-weight="600" fill="#000000" text-anchor="end">Drama, Mystery</text>
+      <line x1="18" y1="698" x2="339" y2="698" stroke="#d9d9d9" stroke-width="1"/>
+      <text x="18" y="720" font-size="11" font-weight="700" letter-spacing="1" fill="#6b6b6b">RATING</text>
+      <text x="339" y="720" font-size="13" font-weight="600" fill="#000000" text-anchor="end">8.5</text>
+      <line x1="18" y1="732" x2="339" y2="732" stroke="#d9d9d9" stroke-width="1"/>
+      <text x="18" y="754" font-size="11" font-weight="700" letter-spacing="1" fill="#6b6b6b">AÑO</text>
+      <text x="339" y="754" font-size="13" font-weight="600" fill="#000000" text-anchor="end">2006</text>
+      <rect x="18" y="766" width="321" height="26" fill="none" stroke="#000000" stroke-width="1"/>
+      <text x="28" y="783" font-size="11" fill="#000000"><tspan font-weight="700" letter-spacing="1">COMPARTE</tspan>  Director · Actores</text>
+    </g>
+  </g>
+</svg>

@@ -350,3 +350,34 @@ th, td { border: 1px solid var(--ink) !important; }
 
 /* Línea divisoria sobria */
 hr { border: none; border-top: var(--bw) solid var(--ink); margin: 2rem 0; }
+
+/* ===================== Dashboard: tarjetas KPI ===================== */
+.kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin: 0.2rem 0 0.6rem 0;
+}
+.kpi {
+    border: var(--bw-strong) solid var(--ink);
+    background: var(--paper);
+    padding: 1.1rem 1.2rem;
+}
+.kpi .num {
+    font-size: 1.9rem;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.02em;
+}
+.kpi .lab {
+    font-size: 0.64rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    margin-top: 0.5rem;
+}
+
+@media (max-width: 900px) {
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+}

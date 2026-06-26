@@ -1,0 +1,112 @@
+<svg viewBox="0 0 1200 950" xmlns="http://www.w3.org/2000/svg" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">
+  <rect x="0" y="0" width="1200" height="950" fill="#ffffff"/>
+  <rect x="6" y="6" width="1188" height="938" fill="none" stroke="#000000" stroke-width="4"/>
+
+  <!-- Header -->
+  <text x="40" y="66" font-size="30" font-weight="800" fill="#000000" letter-spacing="-0.5">RECOMENDADOR INTELIGENTE DE PELÍCULAS</text>
+  <text x="40" y="94" font-size="13" font-weight="700" letter-spacing="5" fill="#6b6b6b">MACHINE LEARNING · NLP · BÚSQUEDA SEMÁNTICA</text>
+  <line x1="40" y1="112" x2="1160" y2="112" stroke="#000000" stroke-width="4"/>
+
+  <!-- Tabs -->
+  <rect x="40" y="150" width="540" height="40" fill="none" stroke="#000000" stroke-width="2"/>
+  <text x="120" y="176" font-size="13" font-weight="700" letter-spacing="1" fill="#000000" text-anchor="middle">RECOMENDAR</text>
+  <line x1="200" y1="150" x2="200" y2="190" stroke="#000000" stroke-width="2"/>
+  <text x="315" y="176" font-size="13" font-weight="700" letter-spacing="1" fill="#000000" text-anchor="middle">BÚSQUEDA SEMÁNTICA</text>
+  <line x1="430" y1="150" x2="430" y2="190" stroke="#000000" stroke-width="2"/>
+  <rect x="430" y="150" width="150" height="40" fill="#000000"/>
+  <text x="505" y="176" font-size="13" font-weight="700" letter-spacing="1" fill="#ffffff" text-anchor="middle">DASHBOARD</text>
+
+  <!-- Resumen del catálogo -->
+  <rect x="40" y="214" width="5" height="22" fill="#000000"/>
+  <text x="56" y="232" font-size="17" font-weight="800" letter-spacing="0.5" fill="#000000">RESUMEN DEL CATÁLOGO</text>
+
+  <g>
+    <rect x="40" y="248" width="268" height="100" fill="#ffffff" stroke="#000000" stroke-width="3"/>
+    <text x="60" y="306" font-size="34" font-weight="800" fill="#000000">2.453</text>
+    <text x="60" y="330" font-size="11" font-weight="700" letter-spacing="1.2" fill="#6b6b6b">PELÍCULAS EN CATÁLOGO</text>
+
+    <rect x="324" y="248" width="268" height="100" fill="#ffffff" stroke="#000000" stroke-width="3"/>
+    <text x="344" y="306" font-size="34" font-weight="800" fill="#000000">6.8</text>
+    <text x="344" y="330" font-size="11" font-weight="700" letter-spacing="1.2" fill="#6b6b6b">RATING MEDIO</text>
+
+    <rect x="608" y="248" width="268" height="100" fill="#ffffff" stroke="#000000" stroke-width="3"/>
+    <text x="628" y="306" font-size="34" font-weight="800" fill="#000000">19</text>
+    <text x="628" y="330" font-size="11" font-weight="700" letter-spacing="1.2" fill="#6b6b6b">GÉNEROS ÚNICOS</text>
+
+    <rect x="892" y="248" width="268" height="100" fill="#ffffff" stroke="#000000" stroke-width="3"/>
+    <text x="912" y="306" font-size="34" font-weight="800" fill="#000000">8</text>
+    <text x="912" y="330" font-size="11" font-weight="700" letter-spacing="1.2" fill="#6b6b6b">GRUPOS TEMÁTICOS</text>
+  </g>
+
+  <line x1="40" y1="378" x2="1160" y2="378" stroke="#000000" stroke-width="2"/>
+
+  <!-- Proceso de similitud -->
+  <rect x="40" y="400" width="5" height="22" fill="#000000"/>
+  <text x="56" y="418" font-size="17" font-weight="800" letter-spacing="0.5" fill="#000000">PROCESO DE SIMILITUD</text>
+  <text x="40" y="444" font-size="12" fill="#6b6b6b">Convierte cada película en un vector y mide la similitud coseno frente al resto. Elige una película para ver su proceso.</text>
+
+  <!-- Controls -->
+  <rect x="40" y="458" width="820" height="42" fill="#ffffff" stroke="#000000" stroke-width="2"/>
+  <text x="56" y="484" font-size="14" fill="#000000">The Dark Knight</text>
+  <text x="844" y="485" font-size="14" fill="#000000" text-anchor="end">▾</text>
+  <rect x="880" y="458" width="280" height="42" fill="#ffffff" stroke="#000000" stroke-width="2"/>
+  <text x="898" y="484" font-size="12" font-weight="700" letter-spacing="1" fill="#6b6b6b">TOP N</text>
+  <line x1="980" y1="479" x2="1130" y2="479" stroke="#000000" stroke-width="2"/>
+  <circle cx="1075" cy="479" r="6" fill="#000000"/>
+
+  <text x="40" y="534" font-size="13" font-weight="700" letter-spacing="1" fill="#000000">PROCESO DE «THE DARK KNIGHT»</text>
+  <line x1="40" y1="544" x2="1160" y2="544" stroke="#000000" stroke-width="3"/>
+
+  <!-- Chart: ranking bar -->
+  <rect x="40" y="560" width="548" height="248" fill="#ffffff" stroke="#000000" stroke-width="2"/>
+  <text x="314" y="586" font-size="12" font-weight="700" letter-spacing="1" fill="#000000" text-anchor="middle">RANKING DE SIMILITUD</text>
+  <line x1="195" y1="600" x2="195" y2="772" stroke="#000000" stroke-width="1.5"/>
+  <line x1="195" y1="772" x2="560" y2="772" stroke="#000000" stroke-width="1.5"/>
+  <g font-size="10" fill="#000000">
+    <text x="50" y="611">Batman Begins</text>
+    <rect x="195" y="600" width="317" height="18" fill="#1a1a1a"/><text x="518" y="614">96%</text>
+    <text x="50" y="638">Inception</text>
+    <rect x="195" y="627" width="297" height="18" fill="#1a1a1a"/><text x="498" y="641">90%</text>
+    <text x="50" y="665">The Prestige</text>
+    <rect x="195" y="654" width="287" height="18" fill="#1a1a1a"/><text x="488" y="668">87%</text>
+    <text x="50" y="692">Interstellar</text>
+    <rect x="195" y="681" width="277" height="18" fill="#1a1a1a"/><text x="478" y="695">84%</text>
+    <text x="50" y="719">Joker</text>
+    <rect x="195" y="708" width="257" height="18" fill="#1a1a1a"/><text x="458" y="722">78%</text>
+    <text x="50" y="746">Man of Steel</text>
+    <rect x="195" y="735" width="238" height="18" fill="#1a1a1a"/><text x="439" y="749">72%</text>
+  </g>
+  <text x="378" y="792" font-size="10" fill="#6b6b6b" text-anchor="middle">Similitud coseno (%)</text>
+
+  <!-- Chart: PCA scatter -->
+  <rect x="612" y="560" width="548" height="248" fill="#ffffff" stroke="#000000" stroke-width="2"/>
+  <text x="886" y="586" font-size="12" font-weight="700" letter-spacing="1" fill="#000000" text-anchor="middle">MAPA DE SIMILITUD (PCA 2D)</text>
+  <rect x="630" y="598" width="512" height="180" fill="none" stroke="#000000" stroke-width="1.2"/>
+  <g fill="#d9d9d9">
+    <circle cx="690" cy="640" r="4"/><circle cx="740" cy="720" r="4"/><circle cx="670" cy="700" r="4"/><circle cx="800" cy="630" r="4"/><circle cx="720" cy="760" r="4"/><circle cx="1080" cy="640" r="4"/><circle cx="1110" cy="720" r="4"/><circle cx="980" cy="760" r="4"/><circle cx="660" cy="745" r="4"/><circle cx="1120" cy="680" r="4"/><circle cx="760" cy="620" r="4"/><circle cx="1010" cy="745" r="4"/><circle cx="700" cy="665" r="4"/><circle cx="1130" cy="755" r="4"/><circle cx="650" cy="690" r="4"/><circle cx="950" cy="625" r="4"/><circle cx="1050" cy="700" r="4"/><circle cx="990" cy="660" r="4"/>
+  </g>
+  <g fill="#8a8a8a" stroke="#000000" stroke-width="1">
+    <circle cx="850" cy="660" r="7"/><circle cx="905" cy="678" r="7"/><circle cx="868" cy="638" r="7"/><circle cx="912" cy="652" r="7"/><circle cx="840" cy="690" r="7"/>
+  </g>
+  <polygon points="880,649 882.9,658 892.4,658 884.8,663.5 887.6,672.5 880,667 872.4,672.5 875.2,663.5 867.6,658 877.1,658" fill="#000000"/>
+  <rect x="640" y="606" width="12" height="12" fill="#000000"/>
+  <text x="658" y="616" font-size="10" fill="#000000">Buscada</text>
+  <circle cx="646" cy="630" r="6" fill="#8a8a8a" stroke="#000000" stroke-width="1"/>
+  <text x="658" y="634" font-size="10" fill="#000000">Recomendadas</text>
+
+  <line x1="40" y1="832" x2="1160" y2="832" stroke="#000000" stroke-width="2"/>
+
+  <!-- Análisis del catálogo -->
+  <rect x="40" y="852" width="5" height="22" fill="#000000"/>
+  <text x="56" y="870" font-size="17" font-weight="800" letter-spacing="0.5" fill="#000000">ANÁLISIS DEL CATÁLOGO</text>
+  <g>
+    <rect x="40" y="886" width="268" height="44" fill="none" stroke="#000000" stroke-width="2"/>
+    <text x="174" y="913" font-size="11" letter-spacing="1.5" fill="#6b6b6b" text-anchor="middle">GÉNEROS</text>
+    <rect x="324" y="886" width="268" height="44" fill="none" stroke="#000000" stroke-width="2"/>
+    <text x="458" y="913" font-size="11" letter-spacing="1.5" fill="#6b6b6b" text-anchor="middle">RATINGS</text>
+    <rect x="608" y="886" width="268" height="44" fill="none" stroke="#000000" stroke-width="2"/>
+    <text x="742" y="913" font-size="11" letter-spacing="1.5" fill="#6b6b6b" text-anchor="middle">POPULARIDAD</text>
+    <rect x="892" y="886" width="268" height="44" fill="none" stroke="#000000" stroke-width="2"/>
+    <text x="1026" y="913" font-size="11" letter-spacing="1.5" fill="#6b6b6b" text-anchor="middle">CLUSTERS · MATRIZ</text>
+  </g>
+</svg>
